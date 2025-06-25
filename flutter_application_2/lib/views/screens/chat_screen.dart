@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_2/views/widgets/chat/my_message_bubble.dart';
 import 'package:flutter_application_2/views/widgets/her_message_buble.dart';
+import 'package:flutter_application_2/views/widgets/shared/message_field_box.dart';
 
 class ChatScreen extends StatelessWidget {
   const ChatScreen({super.key});
@@ -12,6 +13,7 @@ class ChatScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: colors.primary,
+        titleTextStyle: TextStyle(color: Colors.white),
         leading: Padding(
           padding: const EdgeInsets.all(8.0),
           child: CircleAvatar(
@@ -28,15 +30,12 @@ class ChatScreen extends StatelessWidget {
 }
 
 class _ChatView extends StatelessWidget {
-  // const _ChatView({
-  //   super.key,
-  // });
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 5),
+        padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
         child: Column(
           children: [
             Expanded(
@@ -49,7 +48,8 @@ class _ChatView extends StatelessWidget {
                 },
               ),
             ),
-            Text('Mundo'),
+            //inicio de la caja de texto
+            MessageFieldBox(),
           ],
         ),
       ),
