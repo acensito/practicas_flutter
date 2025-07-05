@@ -6,11 +6,11 @@ class GradientBackground extends StatelessWidget {
 
   const GradientBackground({
     super.key,
-    this.colors = const [Colors.transparent, Colors.black87],
-    this.stops = const [0.0, 1.0],
+    this.colors = const [Colors.black87, Colors.transparent],
+    this.stops = const [0.1, 0.5],
   }) : assert(
          colors.length == stops.length,
-         'Stops ad Colors must be same length',
+         'Stops and Colors must be same length',
        );
 
   @override
@@ -21,7 +21,8 @@ class GradientBackground extends StatelessWidget {
           gradient: LinearGradient(
             colors: colors,
             stops: stops,
-            begin: Alignment.topCenter,
+            begin: Alignment.bottomCenter,
+            end: Alignment.topCenter,
           ),
         ),
       ),
