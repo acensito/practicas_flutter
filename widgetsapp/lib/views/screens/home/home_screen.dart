@@ -5,6 +5,8 @@ import 'package:widgetsapp/config/theme/menu/menu_items.dart';
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
+  static const String routeName = 'home';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,6 +55,7 @@ class _CustomListTitle extends StatelessWidget {
         // Navigator.pushNamed(context, menuItem.link);
 
         context.push(menuItem.link);
+
       },
     );
   }
