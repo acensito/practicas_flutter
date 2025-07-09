@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:widgetsapp/config/theme/menu/menu_items.dart';
+import 'package:widgetsapp/views/screens/buttons/buttons_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -31,24 +32,24 @@ class _HomeView extends StatelessWidget {
 }
 
 class _CustomListTitle extends StatelessWidget {
-  const _CustomListTitle({
-    required this.menuItem,
-  });
+  const _CustomListTitle({required this.menuItem});
 
   final MenuItem menuItem;
 
   @override
   Widget build(BuildContext context) {
-
     final colors = Theme.of(context).colorScheme;
 
     return ListTile(
       leading: Icon(menuItem.icon, color: colors.primary),
-      trailing: Icon(Icons.arrow_forward_ios_rounded, color: colors.primary,),
+      trailing: Icon(Icons.arrow_forward_ios_rounded, color: colors.primary),
       title: Text(menuItem.title),
       subtitle: Text(menuItem.subtitle),
       onTap: () {
-        //TODO home screen implementado
+        // Navigator.of(
+        //   context,
+        // ).push(MaterialPageRoute(builder: (context) => const ButtonsScreen()));
+        Navigator.pushNamed(context, menuItem.link);
       },
     );
   }
