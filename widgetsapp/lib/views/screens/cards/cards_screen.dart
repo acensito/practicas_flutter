@@ -34,13 +34,19 @@ class _CardsView extends StatelessWidget {
         ...cards.map(
           (card) => _CardType1(elevation: card['elevation'], label: card['label'])),
         ...cards.map(
-          (card) => _CardType1(elevation: card['elevation'], label: card['label'])),
+          (card) => _CardType2(elevation: card['elevation'], label: card['label'])),
+        ...cards.map(
+          (card) => _CardType3(elevation: card['elevation'], label: card['label'])),
+        ...cards.map(
+          (card) => _CardType4(elevation: card['elevation'], label: card['label'])),
+          SizedBox(height: 50),
       ],
     );
   }
 }
 
 class _CardType1 extends StatelessWidget {
+
   final double elevation;
   final String label;
 
@@ -67,6 +73,136 @@ class _CardType1 extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class _CardType2 extends StatelessWidget {
+
+  final double elevation;
+  final String label;
+
+  const _CardType2({
+    required this.elevation,
+    required this.label,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+
+    final colors = Theme.of(context).colorScheme;
+
+    return Card(
+      shape: RoundedRectangleBorder(
+        borderRadius: const BorderRadius.all(Radius.circular(12)),
+        side: BorderSide(
+          color: colors.outline
+        ),
+      ),
+      elevation: elevation,
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(10.0, 5, 10 , 10),
+        child: Column(
+          children: [
+            Align(
+              alignment: Alignment.topRight,
+              child: IconButton(onPressed: () {}, icon: Icon(Icons.more_vert_outlined)),
+            ),
+            Align(
+              alignment: Alignment.bottomLeft,
+              child: Text('$label - Outlined' ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _CardType3 extends StatelessWidget {
+
+  final double elevation;
+  final String label;
+
+  const _CardType3({
+    required this.elevation,
+    required this.label,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+
+    final colors = Theme.of(context).colorScheme;
+
+    return Card(
+      color: colors.primaryContainer,
+      shape: RoundedRectangleBorder(
+        borderRadius: const BorderRadius.all(Radius.circular(12)),
+        side: BorderSide(
+          color: colors.outline
+        ),
+      ),
+      elevation: elevation,
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(10.0, 5, 10 , 10),
+        child: Column(
+          children: [
+            Align(
+              alignment: Alignment.topRight,
+              child: IconButton(onPressed: () {}, icon: Icon(Icons.more_vert_outlined)),
+            ),
+            Align(
+              alignment: Alignment.bottomLeft,
+              child: Text('$label - Filled' ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _CardType4 extends StatelessWidget {
+
+  final double elevation;
+  final String label;
+
+  const _CardType4({
+    required this.elevation,
+    required this.label,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+
+    final colors = Theme.of(context).colorScheme;
+
+    return Card(
+      clipBehavior: Clip.hardEdge,
+      color: colors.surfaceContainerHighest,
+      shape: RoundedRectangleBorder(
+        borderRadius: const BorderRadius.all(Radius.circular(12)),
+        side: BorderSide(
+          color: colors.outline
+        ),
+      ),
+      elevation: elevation,
+      child: Stack(
+        children: [
+          Image.network('https://picsum.photos/id/${elevation.toInt()}/600/350',
+          height: 350,
+          fit: BoxFit.cover,),
+          Align(
+            alignment: Alignment.topRight,
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(bottomLeft: Radius.circular(12))
+              ),
+              child: IconButton(onPressed: () {}, icon: Icon(Icons.more_vert_outlined))),
+          ),
+        ],
       ),
     );
   }
