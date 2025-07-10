@@ -47,11 +47,35 @@ class _ButtonsView extends StatelessWidget {
             IconButton(onPressed: () {}, icon: Icon(Icons.accessibility_new), tooltip: 'Icon Button'),
             IconButton.filled(onPressed: () {}, icon: Icon(Icons.accessibility_new), style: ButtonStyle(
               backgroundColor: WidgetStatePropertyAll(colors.secondary),
-            )), 
+            )),
+            CustomButton(), 
 
           ],
         ),
       ),
+    );
+  }
+}
+
+class CustomButton extends StatelessWidget {
+  const CustomButton
+({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(20),
+      child: Material(
+        color: Colors.redAccent,
+        child: InkWell(
+          onTap: () {},
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            child: Text('Hola mundo', 
+              style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
+          ),
+              ),
+        )),
     );
   }
 }
