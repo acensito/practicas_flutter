@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 
 final slides = <SlideInfo>[
@@ -30,10 +31,38 @@ class SlideInfo {
   });
 }
 
-class AppTutorial extends StatelessWidget {
+class AppTutorial extends StatefulWidget {
   static const routeName = 'apptutorial_screen';
 
   const AppTutorial({super.key});
+
+  @override
+  State<AppTutorial> createState() => _AppTutorialState();
+}
+
+class _AppTutorialState extends State<AppTutorial> {
+  final PageController _pageViewController = PageController();
+  bool _isLastPage = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _pageViewController.addListener(() {
+      final page = _pageViewController.page ?? 0;
+
+      if (!_isLastPage && page >= slides.length - 1.5) {
+        setState(() {
+          _isLastPage = true;
+        });
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _pageViewController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,6 +71,7 @@ class AppTutorial extends StatelessWidget {
       body: Stack(
         children: [
           PageView(
+            controller: _pageViewController,
             children: slides.map((slide) {
               return _Slide(
                 title: slide.title,
@@ -59,7 +89,21 @@ class AppTutorial extends StatelessWidget {
                 Navigator.of(context).pop();
               },
             ),
-          )
+          ),
+          _isLastPage
+              ? Positioned(
+                  bottom: 30,
+                  right: 30,
+                  child: FadeInRight(
+                    from: 15,
+                    delay: const Duration(seconds: 1),
+                    child: FilledButton(
+                      child: const Text('Salir'),
+                      onPressed: () => Navigator.of(context).pop(),
+                    ),
+                  ),
+                )
+              : const SizedBox(),
         ],
       ),
     );
