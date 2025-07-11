@@ -18,6 +18,17 @@ class _InfiniteScrollState extends State<InfiniteScroll> {
   bool isLoading = false;
   bool isMounted = true;
 
+  void moveScrollToBottom() {
+    if (scrollController.position.pixels + 100 >=
+        scrollController.position.maxScrollExtent) {
+      scrollController.animateTo(
+        scrollController.position.pixels + 120,
+        duration: Duration(milliseconds: 300),
+        curve: Curves.fastOutSlowIn,
+      );
+    }
+  }
+
   void addFiveImages() {
     final lastId = imageIds.last;
     // imageIds.add(lastId + 1);
@@ -56,7 +67,7 @@ class _InfiniteScrollState extends State<InfiniteScroll> {
     isLoading = false;
     if (!isMounted) return;
     setState(() {});
-    //TODO: implementar mover scroll
+    moveScrollToBottom();
   }
 
   Future<void> onRefresh() async {
@@ -111,8 +122,8 @@ class _InfiniteScrollState extends State<InfiniteScroll> {
         },
         child: isLoading
             ? SpinPerfect(
-              infinite: true,
-              child: const Icon(Icons.refresh_rounded),
+                infinite: true,
+                child: const Icon(Icons.refresh_rounded),
               )
             : FadeIn(child: const Icon(Icons.arrow_back_ios_new_outlined)),
       ),
