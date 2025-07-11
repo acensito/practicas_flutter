@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 
 class InfiniteScroll extends StatefulWidget {
@@ -55,6 +56,23 @@ class _InfiniteScrollState extends State<InfiniteScroll> {
     isLoading = false;
     if (!isMounted) return;
     setState(() {});
+    //TODO: implementar mover scroll
+  }
+
+  Future<void> onRefresh() async {
+    isLoading = true;
+    setState(() {});
+    // Simular una carga de datos
+    await Future.delayed(const Duration(seconds: 3));
+    if (!isMounted) return;
+
+    isLoading = false;
+    final lastId = imageIds.last;
+    imageIds.clear();
+    imageIds.add(lastId + 1);
+    addFiveImages();
+
+    setState(() {});
   }
 
   @override
@@ -68,27 +86,35 @@ class _InfiniteScrollState extends State<InfiniteScroll> {
         context: context,
         removeTop: true,
         removeBottom: true,
-        child: ListView.builder(
-          controller: scrollController,
-          itemCount: imageIds.length,
-          itemBuilder: (context, index) {
-            return FadeInImage(
-              fit: BoxFit.cover,
-              width: double.infinity,
-              height: 300,
-              placeholder: AssetImage('assets/images/jar-loading.gif'),
-              image: NetworkImage(
-                'https://picsum.photos/id/${imageIds[index]}/500/300',
-              ),
-            );
-          },
+        child: RefreshIndicator(
+          onRefresh: onRefresh,
+          child: ListView.builder(
+            controller: scrollController,
+            itemCount: imageIds.length,
+            itemBuilder: (context, index) {
+              return FadeInImage(
+                fit: BoxFit.cover,
+                width: double.infinity,
+                height: 300,
+                placeholder: AssetImage('assets/images/jar-loading.gif'),
+                image: NetworkImage(
+                  'https://picsum.photos/id/${imageIds[index]}/500/300',
+                ),
+              );
+            },
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.of(context).pop();
         },
-        child: const Icon(Icons.arrow_back_ios_new_outlined),
+        child: isLoading
+            ? SpinPerfect(
+              infinite: true,
+              child: const Icon(Icons.refresh_rounded),
+              )
+            : FadeIn(child: const Icon(Icons.arrow_back_ios_new_outlined)),
       ),
     );
   }
