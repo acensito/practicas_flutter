@@ -1,21 +1,36 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:widgetsapp/config/menu/menu_items.dart';
+import 'package:widgetsapp/views/screens/providers/theme_provider.dart';
 import 'package:widgetsapp/views/widgets/drawers/side_menu.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
 
   static const String routeName = 'home';
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
 
     final scaffoldKey = GlobalKey<ScaffoldState>();
+    final isDarkMode = ref.watch(isDarkModeProvider);
 
     return Scaffold(
       key: scaffoldKey,
-      appBar: AppBar(title: Text('Flutter + Material 3')),
+      appBar: AppBar(
+        title: Text('Flutter + Material 3'),
+        actions: [
+          IconButton(
+            icon: Icon(isDarkMode ? Icons.dark_mode : Icons.light_mode),
+            onPressed: () {
+              // Toggle dark mode
+              final isDarkMode = ref.read(isDarkModeProvider.notifier).state;
+              ref.read(isDarkModeProvider.notifier).state = !isDarkMode;
+            },
+          ),
+        ],
+        ),
       body: _HomeView(),
       drawer: SideMenu(scaffoldKey: scaffoldKey),
     );

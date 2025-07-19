@@ -55,4 +55,14 @@ const appMenuItems = <MenuItem>[
     title: 'Infinite Scroll y Pull to Refresh',
     subtitle: 'Listas infinitas y refresco',
     link: '/infinite-scroll'),
+  MenuItem(
+    icon: Icons.list_alt_rounded,
+    title: 'Riverpod Counter',
+    subtitle: 'Gestión de estado en Flutter con Riverpod',
+    link: '/counter'),
+  MenuItem(
+    icon: Icons.palette_outlined,
+    title: 'Theme Changer',
+    subtitle: 'Cambio de theme con Riverpod',
+    link: '/theme'),
 ];
